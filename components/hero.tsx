@@ -1,40 +1,65 @@
 "use client";
 
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Link2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+function extractYouTubeId(url: string): string | null {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([^&\n?#]+)/,
+    /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
+  ];
+  
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+  return null;
+}
+
 export function Hero() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const videoId = extractYouTubeId(youtubeUrl);
+    if (videoId) {
+      router.push(`/stream/${videoId}`);
+    }
+  };
 
   return (
     <section className="flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-2xl space-y-8">
         <div className="space-y-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            Discover & Play
-            <span className="block text-primary">Podcasts</span>
+            Stream YouTube
+            <span className="block text-primary">As Podcasts</span>
           </h1>
           <p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
-            Search and stream your favorite podcasts from YouTube
+            Paste a YouTube link and stream it as a podcast
           </p>
         </div>
-        <div className="group relative">
+        <form onSubmit={handleSubmit} className="group relative">
           <div className="relative">
             <div
               className={`absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-300 ${
                 isFocused ? "scale-110 text-primary" : ""
               }`}
             >
-              <Search className="h-5 w-5" />
+              <Link2 className="h-5 w-5" />
             </div>
             <Input
-              type="search"
-              placeholder="Search for podcasts..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              type="url"
+              placeholder="Paste YouTube URL here..."
+              value={youtubeUrl}
+              onChange={(e) => setYoutubeUrl(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               className={`h-14 pl-11 pr-24 text-base shadow-lg transition-all duration-300 ${
@@ -42,10 +67,11 @@ export function Hero() {
               }`}
             />
             <Button
+              type="submit"
               className="absolute right-2 top-1/2 -translate-y-1/2"
               size="default"
             >
-              Search
+              Stream
             </Button>
           </div>
           <div
@@ -53,7 +79,7 @@ export function Hero() {
               isFocused ? "opacity-100" : "opacity-0"
             }`}
           />
-        </div>
+        </form>
       </div>
     </section>
   );
