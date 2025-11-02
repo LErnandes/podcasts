@@ -38,15 +38,15 @@ export function Hero() {
     <section className="flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center px-4 py-16">
       <div className="w-full max-w-2xl space-y-8">
         <div className="space-y-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl animate-in fade-in slide-in-from-bottom-4 duration-700">
             Stream YouTube
-            <span className="block text-primary">As Podcasts</span>
+            <span className="block text-primary animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">As Podcasts</span>
           </h1>
-          <p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl">
+          <p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
             Paste a YouTube link and stream it as a podcast
           </p>
         </div>
-        <form onSubmit={handleSubmit} className="group relative">
+        <form onSubmit={handleSubmit} className="group relative animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
           <div className="relative">
             <div
               className={`absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-300 ${

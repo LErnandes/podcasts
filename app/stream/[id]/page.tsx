@@ -82,10 +82,10 @@ export default function StreamPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col overflow-hidden">
       <Header />
-      <main className="flex-1 py-8 px-4">
-        <div className="mb-6">
+      <main className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+        <div className="flex-shrink-0 py-4 px-4">
           <Button
             onClick={() => router.push("/")}
             variant="ghost"
@@ -95,12 +95,14 @@ export default function StreamPage() {
             Back to Home
           </Button>
         </div>
-        <YouTubePlayer
-          videoId={videoInfo.videoId}
-          title={videoInfo.title}
-          author={videoInfo.author}
-          thumbnail={videoInfo.thumbnail}
-        />
+        <div className="flex-1 flex items-center justify-center min-h-0 px-4 pb-4">
+          <YouTubePlayer
+            videoId={videoInfo.videoId}
+            title={videoInfo.title}
+            author={videoInfo.author}
+            thumbnail={videoInfo.thumbnail}
+          />
+        </div>
       </main>
       <Footer />
     </div>
