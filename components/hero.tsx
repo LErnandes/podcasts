@@ -39,7 +39,7 @@ export function Hero() {
       <div className="w-full max-w-2xl space-y-8">
         <div className="space-y-4 text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl animate-in fade-in slide-in-from-bottom-4 duration-700">
-            Stream YouTube
+            Stream <span className="text-[#FF0000]">YouTube</span>
             <span className="block text-primary animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">As Podcasts</span>
           </h1>
           <p className="mx-auto max-w-[600px] text-lg text-muted-foreground sm:text-xl animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300">
