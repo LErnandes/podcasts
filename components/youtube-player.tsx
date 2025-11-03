@@ -246,7 +246,7 @@ export function YouTubePlayer({ videoId, title, author }: YouTubePlayerProps) {
     };
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     if (playerRef.current && isPlayerReady) {
       try {
         if (isPlaying) {
@@ -261,7 +261,27 @@ export function YouTubePlayer({ videoId, title, author }: YouTubePlayerProps) {
       } catch {
       }
     }
-  };
+  }, [isPlayerReady, isPlaying]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === " " && isPlayerReady) {
+        const activeElement = document.activeElement;
+        const isInputFocused = activeElement instanceof HTMLInputElement || activeElement instanceof HTMLTextAreaElement;
+        
+        if (!isInputFocused) {
+          e.preventDefault();
+          togglePlay();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isPlayerReady, togglePlay]);
 
   const handleSeek = (value: number[]) => {
     if (playerRef.current && isPlayerReady && typeof playerRef.current.seekTo === "function") {
